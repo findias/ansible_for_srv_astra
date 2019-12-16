@@ -1,0 +1,13 @@
+[Unit]
+Description=MountBrest
+
+[Mount]
+What=/mnt/storage/iso/brest-2.3-for-smolensk-1.6-update3.iso
+Where=/opt/brest2_3
+Type=iso9660
+Options=loop
+After=mnt-storage.mount
+
+
+[Install]
+WantedBy=multi-user.target

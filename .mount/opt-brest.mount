@@ -1,0 +1,12 @@
+[Unit]
+Description=MountBrest
+
+[Mount]
+What=/mnt/storage/iso/pk-sv-brest-1.6.1-amd64-2018_08_20.iso 
+Where=/opt/brest
+Type=iso9660
+Options=loop
+After=mnt-storage.mount
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,12 @@
+[Unit]
+Description=MountSmolensk_dev
+
+[Mount]
+What=/mnt/storage/iso/devel-smolensk-1.6-20.06.2018_15.56.iso
+Where=/opt/smolensk_dev
+Type=iso9660
+Options=loop
+After=mnt-storage.mount
+
+[Install]
+WantedBy=multi-user.target

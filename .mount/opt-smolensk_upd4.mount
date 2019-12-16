@@ -1,0 +1,12 @@
+[Unit]
+Description=MountSmolensk_Upd4
+
+[Mount]
+What=/mnt/storage/iso/20191029SE16.iso
+Where=/opt/smolensk_upd4
+Type=iso9660
+Options=loop
+After=mnt-storage.mount
+
+[Install]
+WantedBy=multi-user.target

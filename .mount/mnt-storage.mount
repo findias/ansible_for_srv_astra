@@ -1,0 +1,11 @@
+[Unit]
+Description=MountStorage
+
+[Mount]
+What=/dev/sdb
+Where=/mnt/storage
+Type=ext4
+Options=defaults
+
+[Install]
+WantedBy=multi-user.target

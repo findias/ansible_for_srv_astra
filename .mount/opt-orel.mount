@@ -1,0 +1,12 @@
+[Unit]
+Description=MountOrel
+
+[Mount]
+What=/opt/orel-current.iso
+Where=/opt/orel
+Type=iso9660
+Options=loop
+After=mnt-storage.mount
+
+[Install]
+WantedBy=multi-user.target	

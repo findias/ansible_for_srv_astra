@@ -1,0 +1,12 @@
+[Unit]
+Description=MountSmolensk_Upd2
+
+[Mount]
+What=/mnt/storage/iso/20190222se16.iso
+Where=/opt/smolensk_upd2
+Type=iso9660
+Options=loop
+After=mnt-storage.mount
+
+[Install]
+WantedBy=multi-user.target
