@@ -1,0 +1,22 @@
+
+---
+- name: Install and configurate Brest
+  hosts: srvbrest
+  become: yes
+
+  vars:
+    admin_virtmanager: demo
+          
+  tasks:
+  - name: Install virt-manager
+    apt:
+      update_cache: yes 
+      name: virt-manager
+      state: latest
+
+
+  - name: Add user in group for configured Brest
+    user:
+      name: "{{ admin_virtmanager }}"
+      groups: disk,kvm,libvirt-admin,libvirt-qemu,astra-console,astra-admin,libvirt
+      append: yes

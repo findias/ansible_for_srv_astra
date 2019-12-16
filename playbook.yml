@@ -1,0 +1,32 @@
+
+---
+- name: Turning srv-brest. Mount new disk
+  hosts: srv-ubuntu
+  become: yes
+
+  vars:
+          copy_file_path: /media/user/Work/Astra Linux/Demo/
+          create_folder_path: /mnt/storage/
+          dest_systemd_file: /etc/systemd/system/
+  tasks: 
+          - name: Create directory for second disk
+            file:
+                    path: "{{ create_folder_path}}" 
+                    state: directory
+
+          - name: Copy mount file second disk for /mnt/storage
+            copy:
+                    src: "{{ copy_file_path }}mnt-storage.mount"
+                    dest: "{{ dest_systemd_file }}mnt-storage.mount"
+
+          - name: Make sure service mnt-storage.mount is running and enabled
+            systemd:
+                    daemon_reload: yes
+                    state: started
+                    name: mnt-storage.mount
+                    enabled: yes
+
+
+
+
+         

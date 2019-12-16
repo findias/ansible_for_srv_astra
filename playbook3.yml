@@ -1,0 +1,20 @@
+
+---
+- name:  upgrade
+  hosts: srvbrest
+  become: true
+  become_user: root
+  
+  
+  tasks:
+  - name: Check user
+    debug:
+            var: ansible_user_id
+
+  - name: Update and upgrade apt packages
+    apt:
+         upgrade: dist
+         update_cache: yes
+  
+  - name: apt -f install
+    shell: apt -f install
