@@ -1,0 +1,10 @@
+*.retry
+ping.yml
+install_packege.yml
+playbook-u.yml
+test.txt
+hosts.txt
+ansible.cfg
+group_vars/
+hosts.txt
+
