@@ -16,115 +16,63 @@
 
 
   tasks:
-          - name: Create folders for iso
+          - name: Create folders for iso & VM
             file:
-                 path: "{{ dest_iso }}" 
+                 path: "{{ item }}" 
                  state: directory
-          
-          - name: Create folders for vm
-            file:
-                 path: "{{ dest_vm }}" 
-                 state: directory
-          
-          - name: Copy opt-brest2_3.mount
+            with_items: 
+            - "{{ dest_iso }}"
+            - "{{ dest_vm }}"
+                     
+          - name: Copy file *.mount
             copy:
-                 src: "{{ source_file }}opt-brest2_3.mount"
+                 src: "{{ source_file }}{{item}}"
                  dest: "{{ dest_file }}"
-
-          - name: Copy opt-smolensk.mount
-            copy:
-                 src: "{{ source_file }}opt-smolensk.mount"
-                 dest: "{{ dest_file }}"
-          
-          - name: Copy opt-smolensk_upd4.mount
-            copy:
-                 src: "{{ source_file }}opt-smolensk_upd4.mount"
-                 dest: "{{ dest_file }}"
-          
-          - name: Copy opt-smolensk_dev.mount
-            copy:
-                 src: "{{ source_file }}opt-smolensk_dev.mount"
-                 dest: "{{ dest_file }}"
-
-          - name: Create folders for reposetory smolensk
+            with_items: 
+            - "opt-brest2_3.mount"
+            - "opt-smolensk.mount"
+            - "opt-smolensk_upd4.mount"
+            - "opt-smolensk_dev.mount"
+                     
+          - name: Create folders for reposetory
             file:
-                 path: "{{ dest_mount_iso }}smolensk"  
+                 path: "{{ dest_mount_iso }}{{item}}"  
                  state: directory
-          
+            with_items: 
+            - "smolensk"
+            - "smolensk_upd4"
+            - "smolensk_dev"
+            - "brest2_3"
 
-          - name: Create folders for reposetory smolensk_upd4
-            file:
-                 path: "{{ dest_mount_iso }}smolensk_upd4"  
-                 state: directory
+          - name: Copy iso >> "{{ dest_iso }}"  
+            copy:
+                 src: "{{ source_iso }}{{item}}"
+                 dest: "{{ dest_iso }}"
+            with_items: 
+            - "smolensk-1.6-20.06.2018_15.56.iso"
+            - "devel-smolensk-1.6-20.06.2018_15.56.iso"
+            - "20191029SE16.iso"
+            - "orel-current.iso"
+            - "brest-2.3-for-smolensk-1.6-update3.iso"
 
-          - name: Create folders for reposetory smolensk_dev
-            file:
-                 path: "{{ dest_mount_iso }}smolensk_dev"  
-                 state: directory
-
-          - name: Create folders for reposetory brest2_3 
-            file:
-                 path: "{{ dest_mount_iso }}brest2_3"  
-                 state: directory
-          
-          - name: Copy "{{ source_iso }}smolensk-1.6-20.06.2018_15.56.iso" >> "{{ dest_iso }}"  
-            copy:
-                 src: "{{ source_iso }}smolensk-1.6-20.06.2018_15.56.iso"
-                 dest: "{{ dest_iso }}"
-          
-          - name: Copy "{{ source_iso }}devel-smolensk-1.6-20.06.2018_15.56.iso" >> "{{ dest_iso }}"  
-            copy:
-                 src: "{{ source_iso }}devel-smolensk-1.6-20.06.2018_15.56.iso"
-                 dest: "{{ dest_iso }}"
-          
-          - name: Copy "{{ source_iso }}20191029SE16.iso" >> "{{ dest_iso }}"  
-            copy:
-                 src: "{{ source_iso }}20191029SE16.iso"
-                 dest: "{{ dest_iso }}"
-          
-          - name: Copy "{{ source_iso }}brest-2.3-for-smolensk-1.6-update3.iso" >> "{{ dest_iso }}"  
-            copy:
-                 src: "{{ source_iso }}brest-2.3-for-smolensk-1.6-update3.iso"
-                 dest: "{{ dest_iso }}"
-          
-          - name: Copy "{{ source_iso }}orel-current.iso" >> "{{ dest_iso }}"  
-            copy:
-                 src: "{{ source_iso }}orel-current.iso"
-                 dest: "{{ dest_iso }}"
-
-          - name: Make sure service opt-smolensk.mount is running and enabled
+          - name: Make sure service *.mount is running and enabled
             systemd:
                  daemon_reload: yes
                  state: started
-                 name: opt-smolensk.mount
+                 name: "{{item}}"
                  enabled: yes
-
-          - name: Make sure service opt-smolensk_upd4.mount is running and enabled
-            systemd:
-                 daemon_reload: yes
-                 state: started
-                 name: opt-smolensk_upd4.mount
-                 enabled: yes
-
-          - name: Make sure service opt-smolensk_dev.mount is running and enabled
-            systemd:
-                 daemon_reload: yes
-                 state: started
-                 name: opt-smolensk_dev.mount
-                 enabled: yes
-
-          - name: Make sure service opt-brest2_3.mount is running and enabled
-            systemd:
-                 daemon_reload: yes
-                 state: started
-                 name: opt-brest2_3.mount
-                 enabled: yes
-            
+            with_items: 
+            - "opt-brest2_3.mount"
+            - "opt-smolensk.mount"
+            - "opt-smolensk_upd4.mount"
+            - "opt-smolensk_dev.mount"
+          
           - name: Copy sources.list
             copy:
                  src: "{{ source_file }}sources.list"
                  dest: "/etc/apt/"
 
+
           - name: Update_cache apt
             apt:
-                    update_cache: yes 
+                 update_cache: yes 

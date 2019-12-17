@@ -15,6 +15,4 @@
     apt:
          upgrade: dist
          update_cache: yes
-  
-  - name: apt -f install
-    shell: apt -f install
+
